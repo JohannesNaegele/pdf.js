@@ -253,7 +253,11 @@ class PDFPageView {
       }
     }
     if (this.zoomLayer) {
-      this.cssTransform(this.zoomLayer.firstChild);
+      // ich
+      //console.log(this.zoomLayer.firstChild.currentSrc);
+      if ("https://www.saale-orla-kreis.de/sokdok/pic/14/fsp/Rot%20Quadrat.jpg" != this.zoomLayer.firstChild.currentSrc) {
+        this.cssTransform(this.zoomLayer.firstChild);
+      }
     }
     this.reset(/* keepZoomLayer = */ true, /* keepAnnotations = */ true);
   }
@@ -384,12 +388,35 @@ class PDFPageView {
     canvasWrapper.style.height = div.style.height;
     canvasWrapper.classList.add('canvasWrapper');
 
+    // ich
+    /*let imageWrapper = document.createElement('div');
+    //     imageWrapper.style.width = div.style.width;
+    //     imageWrapper.style.height = div.style.height;
+    //     imageWrapper.classList.add('canvasWrapper');
+    //     // ich
+    //     var imageLayer = document.createElement('img');
+    //     imageLayer.width = Math.floor(canvasWrapper.style.width/3);
+    //     imageLayer.height = Math.floor(canvasWrapper.style.height/3);
+    //     //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
+    //     imageLayer.src = "https://www.saale-orla-kreis.de/sokdok/pic/14/fsp/Rot%20Quadrat.jpg";
+    //     imageLayer.alt = "Loading image...";
+    //     imageLayer.classList.add('imageLayer');
+    //     //canvasWrapper.appendChild(imageLayer);
+    //     imageWrapper.appendChild(imageLayer);
+    //     //
+    //     //*/
+
     if (this.annotationLayer && this.annotationLayer.div) {
       // The annotation layer needs to stay on top.
       div.insertBefore(canvasWrapper, this.annotationLayer.div);
     } else {
       div.appendChild(canvasWrapper);
     }
+
+    // ich
+    //div.insertBefore(imageWrapper, this.canvasWrapper);
+    //div.appendChild(imageWrapper);
+    //
 
     let textLayer = null;
     if (this.textLayerMode !== TextLayerMode.DISABLE && this.textLayerFactory) {
@@ -524,7 +551,17 @@ class PDFPageView {
         isCanvasHidden = false;
       }
     };
-
+    // ich
+    var imageLayer = document.createElement('img');
+    imageLayer.width = Math.floor(canvasWrapper.style.width/3);
+    imageLayer.height = Math.floor(canvasWrapper.style.height/3);
+    //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
+    imageLayer.src = "https://www.saale-orla-kreis.de/sokdok/pic/14/fsp/Rot%20Quadrat.jpg";
+    imageLayer.alt = "Loading image...";
+    imageLayer.classList.add('imageLayer');
+    //canvasWrapper.appendChild(imageLayer);
+    //imageWrapper.appendChild(imageLayer);
+    //
     canvasWrapper.appendChild(canvas);
     this.canvas = canvas;
 
@@ -567,6 +604,60 @@ class PDFPageView {
     canvas.style.height = roundToDivide(viewport.height, sfy[1]) + 'px';
     // Add the viewport so it's known what it was originally drawn with.
     this.paintedViewportMap.set(canvas, viewport);
+
+    // ich, Idee: nach heigth/width Initialisierung
+    if (this.id == 10) {
+      var imageLayer = document.createElement('img');
+      imageLayer.width = Math.floor(canvasWrapper.style.width.replace(/px/,"")/3);
+      imageLayer.height = Math.floor(canvasWrapper.style.height.replace(/px/,"")/3);
+      //imageLayer.width = 800;
+      //imageLayer.height = 801;
+      imageLayer.style.width = imageLayer.width.toString() + "px";
+      imageLayer.style.height = imageLayer.height.toString()  + "px";
+      imageLayer.style.top = "0px";
+      //imageLayer.style.top = imageLayer.height.toString()  + "px";
+      //imageLayer.style.zIndex = "100000";
+      //alert(imageLayer.width);
+      // NaN !!!
+      //alert(canvasWrapper.style.width);
+      //alert((parseInt(Math.floor(canvasWrapper.style.width.replace(/px/,""))/3))+"px");
+      //alert(Math.floor(canvasWrapper.style.width/3));
+      //alert(Math.floor(canvasWrapper.style.height/3));
+      //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
+      imageLayer.src = "https://www.saale-orla-kreis.de/sokdok/pic/14/fsp/Rot%20Quadrat.jpg";
+      //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
+      imageLayer.alt = "Loading image...";
+      imageLayer.classList.add('imageLayer');
+      canvasWrapper.appendChild(imageLayer);
+      //imageWrapper.appendChild(imageLayer);
+      //
+    }
+    if (this.id == 23) {
+      var imageLayer = document.createElement('video');
+      imageLayer.width = Math.floor(canvasWrapper.style.width.replace(/px/,"")/3);
+      imageLayer.height = Math.floor(canvasWrapper.style.height.replace(/px/,"")/3);
+      //imageLayer.width = 800;
+      //imageLayer.height = 801;
+      imageLayer.style.width = imageLayer.width.toString() + "px";
+      imageLayer.style.height = imageLayer.height.toString()  + "px";
+      imageLayer.style.top = "0px";
+      //imageLayer.style.top = imageLayer.height.toString()  + "px";
+      //imageLayer.style.zIndex = "100000";
+      //alert(imageLayer.width);
+      // NaN !!!
+      //alert(canvasWrapper.style.width);
+      //alert((parseInt(Math.floor(canvasWrapper.style.width.replace(/px/,""))/3))+"px");
+      //alert(Math.floor(canvasWrapper.style.width/3));
+      //alert(Math.floor(canvasWrapper.style.height/3));
+      //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
+      imageLayer.src = "https://www.saale-orla-kreis.de/sokdok/pic/14/fsp/Rot%20Quadrat.jpg";
+      //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
+      imageLayer.alt = "Loading image...";
+      imageLayer.classList.add('imageLayer');
+      canvasWrapper.appendChild(imageLayer);
+      //imageWrapper.appendChild(imageLayer);
+      //
+    }
 
     // Rendering area
     let transform = !outputScale.scaled ? null :

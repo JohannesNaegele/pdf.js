@@ -1909,3 +1909,12 @@ html[dir='rtl'] #documentPropertiesOverlay .row > * {
     display: none;
   }
 }
+
+/*
+	ich
+*/
+
+.imageLayer {
+  position:absolute;
+  z-index: 41000;
+}
