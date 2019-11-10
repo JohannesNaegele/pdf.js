@@ -633,14 +633,17 @@ class PDFPageView {
       //
     }
     if (this.id == 23) {
-      var imageLayer = document.createElement('video');
-      imageLayer.width = Math.floor(canvasWrapper.style.width.replace(/px/,"")/3);
-      imageLayer.height = Math.floor(canvasWrapper.style.height.replace(/px/,"")/3);
+      var videoLayer = document.createElement('video');
+      videoLayer.width = Math.floor(canvasWrapper.style.width.replace(/px/,"")*0.65);
+      videoLayer.height = Math.floor(canvasWrapper.style.height.replace(/px/,"")*0.256);
       //imageLayer.width = 800;
       //imageLayer.height = 801;
-      imageLayer.style.width = imageLayer.width.toString() + "px";
-      imageLayer.style.height = imageLayer.height.toString()  + "px";
-      imageLayer.style.top = "0px";
+      videoLayer.style.width = videoLayer.width.toString() + "px";
+      videoLayer.style.height = videoLayer.height.toString()  + "px";
+      //alert((0.5*canvasWrapper.style.height).toString() + "px");
+      //alert(((canvasWrapper.style.height-videoLayer.width)/2).toString() + "px");
+      videoLayer.style.top = (0.5*videoLayer.height/0.256).toString() + "px";
+      videoLayer.style.left = ((videoLayer.width/0.65-videoLayer.width)/2).toString() + "px";
       //imageLayer.style.top = imageLayer.height.toString()  + "px";
       //imageLayer.style.zIndex = "100000";
       //alert(imageLayer.width);
@@ -650,11 +653,12 @@ class PDFPageView {
       //alert(Math.floor(canvasWrapper.style.width/3));
       //alert(Math.floor(canvasWrapper.style.height/3));
       //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
-      imageLayer.src = "https://www.saale-orla-kreis.de/sokdok/pic/14/fsp/Rot%20Quadrat.jpg";
+      videoLayer.src = "./StochastikTest.mp4";
       //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
-      imageLayer.alt = "Loading image...";
-      imageLayer.classList.add('imageLayer');
-      canvasWrapper.appendChild(imageLayer);
+      //videoLayer.alt = "Loading image...";
+      videoLayer.controls = true;
+      videoLayer.classList.add('imageLayer');
+      canvasWrapper.appendChild(videoLayer);
       //imageWrapper.appendChild(imageLayer);
       //
     }
