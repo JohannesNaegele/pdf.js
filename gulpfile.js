@@ -701,6 +701,10 @@ gulp.task('generic', gulp.series('buildnumber', 'default_preferences', 'locale',
 
     gulp.src('web/compressed.tracemonkey-pldi-09.pdf')
         .pipe(gulp.dest(GENERIC_DIR + 'web')),
+    gulp.src('web/Stochastik1.pdf')
+      .pipe(gulp.dest(GENERIC_DIR + 'web')),
+    gulp.src('web/StochastikTest.mp4')
+      .pipe(gulp.dest(GENERIC_DIR + 'web')),
   ]);
 }));
 
