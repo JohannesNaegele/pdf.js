@@ -166,21 +166,6 @@ class PDFPageView {
       if (currentZoomLayerNode === node || currentAnnotationNode === node) {
         continue;
       }
-
-      // ich
-      if (node.className == "canvasWrapper") {
-        let j = 1;
-        let canvasWrapperNode = node;
-        for (j = 1; j < canvasWrapperNode.childNodes.length; j++) {
-          let canvasWrapperChild = canvasWrapperNode.childNodes[j];
-          if (canvasWrapperChild.className == "imageLayer") {
-            continue;
-          }
-          canvasWrapperNode.removeChild(canvasWrapperChild);
-        }
-        continue;
-      }
-      //////////
       div.removeChild(node);
     }
     div.removeAttribute('data-loaded');
@@ -269,7 +254,7 @@ class PDFPageView {
     }
     if (this.zoomLayer) {
       // ich
-      console.log(this.zoomLayer.firstChild);
+      //console.log(this.zoomLayer.firstChild.currentSrc);
       if ("https://www.saale-orla-kreis.de/sokdok/pic/14/fsp/Rot%20Quadrat.jpg" != this.zoomLayer.firstChild.currentSrc) {
         this.cssTransform(this.zoomLayer.firstChild);
       }
@@ -398,18 +383,7 @@ class PDFPageView {
     let div = this.div;
     // Wrap the canvas so that if it has a CSS transform for high DPI the
     // overflow will be hidden in Firefox.
-
-    // ich
-    console.log(div);
-    if (typeof(div.canvasWrapper) == "object") {
-      var canvasWrapper = div.canvasWrapper;
-    }
-    else {
-      var canvasWrapper = document.createElement('div');
-    }
-    /////////
-
-    //let canvasWrapper = document.createElement('div');
+    let canvasWrapper = document.createElement('div');
     canvasWrapper.style.width = div.style.width;
     canvasWrapper.style.height = div.style.height;
     canvasWrapper.classList.add('canvasWrapper');
@@ -432,26 +406,12 @@ class PDFPageView {
     //     //
     //     //*/
 
-
-    // ich
-    let divCanvasWrapper = false;
-    let i = 0;
-    for (i = 0; i < div.childNodes.length; i++) {
-      if (div.childNodes[i].className == "canvasWrapper") {
-        divCanvasWrapper = true;
-        console.log("true");
-      }
+    if (this.annotationLayer && this.annotationLayer.div) {
+      // The annotation layer needs to stay on top.
+      div.insertBefore(canvasWrapper, this.annotationLayer.div);
+    } else {
+      div.appendChild(canvasWrapper);
     }
-    if (divCanvasWrapper == false) {
-      //console.log(div.canvasWrapper);
-      if (this.annotationLayer && this.annotationLayer.div) {
-        // The annotation layer needs to stay on top.
-        div.insertBefore(canvasWrapper, this.annotationLayer.div);
-      } else {
-        div.appendChild(canvasWrapper);
-      }
-    }
-    //////////////
 
     // ich
     //div.insertBefore(imageWrapper, this.canvasWrapper);
@@ -646,92 +606,61 @@ class PDFPageView {
     this.paintedViewportMap.set(canvas, viewport);
 
     // ich, Idee: nach heigth/width Initialisierung
-    let canvasWrapperImageLayer = false;
-    let i = 0;
-    var imageIndex = 0;
-    for (i = 0; i < canvasWrapper.childNodes.length; i++) {
-      if (canvasWrapper.childNodes[i].className == "imageLayer") {
-        canvasWrapperImageLayer = true;
-        imageIndex = i;
-      }
+    if (this.id == 10) {
+      var imageLayer = document.createElement('img');
+      imageLayer.width = Math.floor(canvasWrapper.style.width.replace(/px/,"")/3);
+      imageLayer.height = Math.floor(canvasWrapper.style.height.replace(/px/,"")/3);
+      //imageLayer.width = 800;
+      //imageLayer.height = 801;
+      imageLayer.style.width = imageLayer.width.toString() + "px";
+      imageLayer.style.height = imageLayer.height.toString()  + "px";
+      imageLayer.style.top = "0px";
+      //imageLayer.style.top = imageLayer.height.toString()  + "px";
+      //imageLayer.style.zIndex = "100000";
+      //alert(imageLayer.width);
+      // NaN !!!
+      //alert(canvasWrapper.style.width);
+      //alert((parseInt(Math.floor(canvasWrapper.style.width.replace(/px/,""))/3))+"px");
+      //alert(Math.floor(canvasWrapper.style.width/3));
+      //alert(Math.floor(canvasWrapper.style.height/3));
+      //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
+      imageLayer.src = "https://www.saale-orla-kreis.de/sokdok/pic/14/fsp/Rot%20Quadrat.jpg";
+      //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
+      imageLayer.alt = "Loading image...";
+      imageLayer.classList.add('imageLayer');
+      canvasWrapper.appendChild(imageLayer);
+      //imageWrapper.appendChild(imageLayer);
+      //
     }
-    if (canvasWrapperImageLayer == false) {
-      if (this.id == 10) {
-        var imageLayer = document.createElement('img');
-        imageLayer.width = Math.floor(canvasWrapper.style.width.replace(/px/,"")/3);
-        imageLayer.height = Math.floor(canvasWrapper.style.height.replace(/px/,"")/3);
-        //imageLayer.width = 800;
-        //imageLayer.height = 801;
-        imageLayer.style.width = imageLayer.width.toString() + "px";
-        imageLayer.style.height = imageLayer.height.toString()  + "px";
-        imageLayer.style.top = "0px";
-        //imageLayer.style.top = imageLayer.height.toString()  + "px";
-        //imageLayer.style.zIndex = "100000";
-        //alert(imageLayer.width);
-        // NaN !!!
-        //alert(canvasWrapper.style.width);
-        //alert((parseInt(Math.floor(canvasWrapper.style.width.replace(/px/,""))/3))+"px");
-        //alert(Math.floor(canvasWrapper.style.width/3));
-        //alert(Math.floor(canvasWrapper.style.height/3));
-        //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
-        imageLayer.src = "https://www.saale-orla-kreis.de/sokdok/pic/14/fsp/Rot%20Quadrat.jpg";
-        //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
-        imageLayer.alt = "Loading image...";
-        imageLayer.classList.add('imageLayer');
-        canvasWrapper.appendChild(imageLayer);
-        //imageWrapper.appendChild(imageLayer);
-        //
-      }
-      if (this.id == 23) {
-        var videoLayer = document.createElement('video');
-        videoLayer.width = Math.floor(canvasWrapper.style.width.replace(/px/,"")*0.65);
-        videoLayer.height = Math.floor(canvasWrapper.style.height.replace(/px/,"")*0.256);
-        //imageLayer.width = 800;
-        //imageLayer.height = 801;
-        videoLayer.style.width = videoLayer.width.toString() + "px";
-        videoLayer.style.height = videoLayer.height.toString()  + "px";
-        //alert((0.5*canvasWrapper.style.height).toString() + "px");
-        //alert(((canvasWrapper.style.height-videoLayer.width)/2).toString() + "px");
-        videoLayer.style.top = (0.5*videoLayer.height/0.256).toString() + "px";
-        videoLayer.style.left = ((videoLayer.width/0.65-videoLayer.width)/2).toString() + "px";
-        //imageLayer.style.top = imageLayer.height.toString()  + "px";
-        //imageLayer.style.zIndex = "100000";
-        //alert(imageLayer.width);
-        // NaN !!!
-        //alert(canvasWrapper.style.width);
-        //alert((parseInt(Math.floor(canvasWrapper.style.width.replace(/px/,""))/3))+"px");
-        //alert(Math.floor(canvasWrapper.style.width/3));
-        //alert(Math.floor(canvasWrapper.style.height/3));
-        //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
-        videoLayer.src = "./StochastikTest.mp4";
-        //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
-        //videoLayer.alt = "Loading image...";
-        videoLayer.controls = true;
-        videoLayer.classList.add('imageLayer');
-        canvasWrapper.appendChild(videoLayer);
-        //imageWrapper.appendChild(imageLayer);
-        //
-      }
-    }
-    else {
-      if (this.id == 10) {
-        var imageLayer = document.createElement('img');
-        canvasWrapper.childNodes[imageIndex].width = Math.floor(canvasWrapper.style.width.replace(/px/,"")/3);
-        canvasWrapper.childNodes[imageIndex].height = Math.floor(canvasWrapper.style.height.replace(/px/,"")/3);
-        canvasWrapper.childNodes[imageIndex].style.width = imageLayer.width.toString() + "px";
-        canvasWrapper.childNodes[imageIndex].style.height = imageLayer.height.toString()  + "px";
-        canvasWrapper.childNodes[imageIndex].style.top = "0px";
-      }
-      if (this.id == 23) {
-        var videoLayer = document.createElement('video');
-        canvasWrapper.childNodes[imageIndex].width = Math.floor(canvasWrapper.style.width.replace(/px/,"")*0.65);
-        canvasWrapper.childNodes[imageIndex].height = Math.floor(canvasWrapper.style.height.replace(/px/,"")*0.256);
-        canvasWrapper.childNodes[imageIndex].style.width = videoLayer.width.toString() + "px";
-        canvasWrapper.childNodes[imageIndex].style.height = videoLayer.height.toString()  + "px";
-        canvasWrapper.childNodes[imageIndex].style.top = (0.5*videoLayer.height/0.256).toString() + "px";
-        canvasWrapper.childNodes[imageIndex].style.left = ((videoLayer.width/0.65-videoLayer.width)/2).toString() + "px";
-        //
-      }
+    if (this.id == 23) {
+      var videoLayer = document.createElement('video');
+      videoLayer.width = Math.floor(canvasWrapper.style.width.replace(/px/,"")*0.65);
+      videoLayer.height = Math.floor(canvasWrapper.style.height.replace(/px/,"")*0.256);
+      //imageLayer.width = 800;
+      //imageLayer.height = 801;
+      videoLayer.style.width = videoLayer.width.toString() + "px";
+      videoLayer.style.height = videoLayer.height.toString()  + "px";
+      //alert((0.5*canvasWrapper.style.height).toString() + "px");
+      //alert(((canvasWrapper.style.height-videoLayer.width)/2).toString() + "px");
+      videoLayer.style.top = (0.5*videoLayer.height/0.256).toString() + "px";
+      videoLayer.style.left = ((videoLayer.width/0.65-videoLayer.width)/2).toString() + "px";
+      //imageLayer.style.top = imageLayer.height.toString()  + "px";
+      //imageLayer.style.zIndex = "100000";
+      //alert(imageLayer.width);
+      // NaN !!!
+      //alert(canvasWrapper.style.width);
+      //alert((parseInt(Math.floor(canvasWrapper.style.width.replace(/px/,""))/3))+"px");
+      //alert(Math.floor(canvasWrapper.style.width/3));
+      //alert(Math.floor(canvasWrapper.style.height/3));
+      //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
+      videoLayer.src = "./StochastikTest.mp4";
+      //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
+      //videoLayer.alt = "Loading image...";
+      videoLayer.controls = true;
+      videoLayer.classList.add('imageLayer');
+      canvasWrapper.appendChild(videoLayer);
+      //imageWrapper.appendChild(imageLayer);
+      //
     }
 
     // Rendering area
