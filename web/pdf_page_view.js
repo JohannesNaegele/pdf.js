@@ -149,6 +149,8 @@ class PDFPageView {
     this.zoomLayer = null;
   }
 
+  // keepZoomLayer = true müsste dafür sorgen, dass der Wrapper erhalten bleibt
+  // d. h.: das passiert nur in draw() und destroy()!
   reset(keepZoomLayer = false, keepAnnotations = false) {
     this.cancelRendering(keepAnnotations);
     this.renderingState = RenderingStates.INITIAL;
@@ -179,6 +181,8 @@ class PDFPageView {
       this.annotationLayer = null;
     }
 
+    // hier wird eigentlich nur der canvas gelöscht, nicht der Wrapper
+    // es gilt: !null = true
     if (!currentZoomLayerNode) {
       if (this.canvas) {
         this.paintedViewportMap.delete(this.canvas);
