@@ -419,12 +419,7 @@ class PDFPageView {
       // The annotation layer needs to stay on top.
       div.insertBefore(canvasWrapper, this.annotationLayer.div);
     } else {
-      if (!this.imageWrapper) {
-        div.appendChild(canvasWrapper);
-      }
-      else {
-        div.insertBefore(canvasWrapper, this.imageWrapper);
-      }
+      div.appendChild(canvasWrapper);
     }
 
     // ich
@@ -675,12 +670,6 @@ class PDFPageView {
 
       this.imageWrapper = imageWrapper;
       this.div.appendChild(this.imageWrapper);
-      /*if (!this.textLayer.div) {
-        this.div.appendChild(this.imageWrapper);
-      }
-      else {
-        this.div.insertBefore(this.imageWrapper, this.textLayer.div);
-      }*/
     }
     else {
       imageWrapper = this.imageWrapper
