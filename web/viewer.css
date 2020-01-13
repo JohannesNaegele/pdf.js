@@ -1918,3 +1918,7 @@ html[dir='rtl'] #documentPropertiesOverlay .row > * {
   position:absolute;
   z-index: 41000;
 }
+
+.imageWrapper {
+  position:absolute;
+}
