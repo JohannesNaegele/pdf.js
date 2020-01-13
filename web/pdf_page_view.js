@@ -694,7 +694,14 @@ class PDFPageView {
       }
 
       this.imageWrapper = imageWrapper;
-      this.div.appendChild(this.imageWrapper);
+
+      if (canvasWrapper) {
+        this.div.insertBefore(this.imageWrapper, canvasWrapper);
+        /*console.log(this.textLayer.div);*/
+      } else {
+        this.div.appendChild(this.imageWrapper);
+      }
+      /*this.div.appendChild(this.imageWrapper);*/
     }
     /*else {
       imageWrapper = this.imageWrapper
