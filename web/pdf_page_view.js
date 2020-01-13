@@ -314,6 +314,31 @@ class PDFPageView {
       'scale(' + scaleX + ',' + scaleY + ')';
     target.style.transform = cssTransform;
 
+    if (this.imageWrapper) {
+      var imageWrapper = this.imageWrapper;
+      imageWrapper.style.width = target.style.width;
+      imageWrapper.style.height = target.style.height;
+
+      if (this.id == 10) {
+        var imageLayer = imageWrapper.childNodes[0];
+        imageLayer.width = Math.floor(imageWrapper.style.width.replace(/px/,"")/3);
+        imageLayer.height = Math.floor(imageWrapper.style.height.replace(/px/,"")/3);
+        imageLayer.style.width = imageLayer.width.toString() + "px";
+        imageLayer.style.height = imageLayer.height.toString()  + "px";
+        imageLayer.style.top = "0px";
+        //
+      }
+      if (this.id == 23) {
+        var videoLayer = imageWrapper.childNodes[0];
+        videoLayer.width = Math.floor(imageWrapper.style.width.replace(/px/,"")*0.65);
+        videoLayer.height = Math.floor(imageWrapper.style.height.replace(/px/,"")*0.256);
+        videoLayer.style.width = videoLayer.width.toString() + "px";
+        videoLayer.style.height = videoLayer.height.toString()  + "px";
+        videoLayer.style.top = (0.5*videoLayer.height/0.256).toString() + "px";
+        videoLayer.style.left = ((videoLayer.width/0.65-videoLayer.width)/2).toString() + "px";
+      }
+    }
+
     if (this.textLayer) {
       // Rotating the text layer is more complicated since the divs inside the
       // the text layer are rotated.
@@ -671,7 +696,7 @@ class PDFPageView {
       this.imageWrapper = imageWrapper;
       this.div.appendChild(this.imageWrapper);
     }
-    else {
+    /*else {
       imageWrapper = this.imageWrapper
       imageWrapper.style.width = canvasWrapper.style.width;
       imageWrapper.style.height = canvasWrapper.style.height;
@@ -694,7 +719,7 @@ class PDFPageView {
         videoLayer.style.top = (0.5*videoLayer.height/0.256).toString() + "px";
         videoLayer.style.left = ((videoLayer.width/0.65-videoLayer.width)/2).toString() + "px";
       }
-    }
+    }*/
     //
 
     // ich, Idee: nach heigth/width Initialisierung
