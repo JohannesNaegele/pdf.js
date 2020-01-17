@@ -173,6 +173,9 @@ class PDFPageView {
         continue;
       }
       div.removeChild(node);
+      if (this.imageWrapper === node) {
+        node.setAttribute("hidden", true);
+      }
     }
     div.removeAttribute('data-loaded');
 
@@ -636,61 +639,43 @@ class PDFPageView {
       imageWrapper.style.width = canvasWrapper.style.width;
       imageWrapper.style.height = canvasWrapper.style.height;
 
-      if (this.id == 10) {
-        var imageLayer = document.createElement('img');
-        imageLayer.width = Math.floor(imageWrapper.style.width.replace(/px/,"")/3);
-        imageLayer.height = Math.floor(imageWrapper.style.height.replace(/px/,"")/3);
-        //imageLayer.width = 800;
-        //imageLayer.height = 801;
+      if (this.id == 3) {
+        var imageLayer = document.createElement('object');
+        imageLayer.width = Math.floor(imageWrapper.style.width.replace(/px/,"")*(132/210));
+        imageLayer.height = Math.floor(imageWrapper.style.height.replace(/px/,"")*(53/297));
         imageLayer.style.width = imageLayer.width.toString() + "px";
         imageLayer.style.height = imageLayer.height.toString()  + "px";
-        imageLayer.style.top = "0px";
-        //imageLayer.style.top = imageLayer.height.toString()  + "px";
-        //imageLayer.style.zIndex = "100000";
-        //alert(imageLayer.width);
-        // NaN !!!
-        //alert(canvasWrapper.style.width);
-        //alert((parseInt(Math.floor(canvasWrapper.style.width.replace(/px/,""))/3))+"px");
-        //alert(Math.floor(canvasWrapper.style.width/3));
-        //alert(Math.floor(canvasWrapper.style.height/3));
-        //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
-        imageLayer.src = "https://www.saale-orla-kreis.de/sokdok/pic/14/fsp/Rot%20Quadrat.jpg";
-        //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
-        imageLayer.alt = "Loading image...";
+        imageLayer.style.top = (imageLayer.height*(32/297)/(53/297)).toString() + "px";
+        imageLayer.style.left = (imageLayer.width*(32/210)/(132/210)).toString() + "px";
+        imageLayer.data = "./interactive/normal_anim.svg";
+        imageLayer.id = "normal";
         imageLayer.classList.add('imageLayer');
         imageWrapper.appendChild(imageLayer);
-        //imageWrapper.appendChild(imageLayer);
-        //
       }
-      if (this.id == 23) {
-        var videoLayer = document.createElement('video');
-        videoLayer.width = Math.floor(imageWrapper.style.width.replace(/px/,"")*0.65);
-        videoLayer.height = Math.floor(imageWrapper.style.height.replace(/px/,"")*0.256);
-        //imageLayer.width = 800;
-        //imageLayer.height = 801;
-        videoLayer.style.width = videoLayer.width.toString() + "px";
-        videoLayer.style.height = videoLayer.height.toString()  + "px";
-        //alert((0.5*canvasWrapper.style.height).toString() + "px");
-        //alert(((canvasWrapper.style.height-videoLayer.width)/2).toString() + "px");
-        videoLayer.style.top = (0.5*videoLayer.height/0.256).toString() + "px";
-        videoLayer.style.left = ((videoLayer.width/0.65-videoLayer.width)/2).toString() + "px";
-        //imageLayer.style.top = imageLayer.height.toString()  + "px";
-        //imageLayer.style.zIndex = "100000";
-        //alert(imageLayer.width);
-        // NaN !!!
-        //alert(canvasWrapper.style.width);
-        //alert((parseInt(Math.floor(canvasWrapper.style.width.replace(/px/,""))/3))+"px");
-        //alert(Math.floor(canvasWrapper.style.width/3));
-        //alert(Math.floor(canvasWrapper.style.height/3));
-        //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
-        videoLayer.src = "./StochastikTest.mp4";
-        //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
-        //videoLayer.alt = "Loading image...";
-        videoLayer.controls = true;
-        videoLayer.classList.add('imageLayer');
-        imageWrapper.appendChild(videoLayer);
-        //imageWrapper.appendChild(imageLayer);
-        //
+      if (this.id == 4) {var imageLayer = document.createElement('object');
+        imageLayer.width = Math.floor(imageWrapper.style.width.replace(/px/,"")*(139/210));
+        imageLayer.height = Math.floor(imageWrapper.style.height.replace(/px/,"")*(67/297));
+        imageLayer.style.width = imageLayer.width.toString() + "px";
+        imageLayer.style.height = imageLayer.height.toString()  + "px";
+        imageLayer.style.top = (imageLayer.height*(32/297)/(67/297)).toString() + "px";
+        imageLayer.style.left = (imageLayer.width*(32/210)/(139/210)).toString() + "px";
+        imageLayer.data = "./interactive/exp_anim.svg";
+        imageLayer.id = "exp";
+        imageLayer.classList.add('imageLayer');
+        imageWrapper.appendChild(imageLayer);
+      }
+
+      if (this.id == 5) {var imageLayer = document.createElement('object');
+        imageLayer.width = Math.floor(imageWrapper.style.width.replace(/px/,"")*(141/210));
+        imageLayer.height = Math.floor(imageWrapper.style.height.replace(/px/,"")*(52/297));
+        imageLayer.style.width = imageLayer.width.toString() + "px";
+        imageLayer.style.height = imageLayer.height.toString()  + "px";
+        imageLayer.style.top = (imageLayer.height*(86/297)/(53/297)).toString() + "px";
+        imageLayer.style.left = (imageLayer.width*(32/210)/(132/210)).toString() + "px";
+        imageLayer.data = "./interactive/uniform_anim.svg";
+        imageLayer.id = "uniform";
+        imageLayer.classList.add('imageLayer');
+        imageWrapper.appendChild(imageLayer);
       }
 
       this.imageWrapper = imageWrapper;
@@ -702,6 +687,9 @@ class PDFPageView {
         this.div.appendChild(this.imageWrapper);
       }
       /*this.div.appendChild(this.imageWrapper);*/
+    }
+    else {
+      imageWrapper.setAttribute("hidden", false);
     }
     /*else {
       imageWrapper = this.imageWrapper

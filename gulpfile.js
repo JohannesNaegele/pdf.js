@@ -699,11 +699,15 @@ gulp.task('generic', gulp.series('buildnumber', 'default_preferences', 'locale',
         ]))
         .pipe(gulp.dest(GENERIC_DIR + 'web')),
 
-    gulp.src('web/compressed.tracemonkey-pldi-09.pdf')
-        .pipe(gulp.dest(GENERIC_DIR + 'web')),
-    gulp.src('web/Stochastik1.pdf')
-      .pipe(gulp.dest(GENERIC_DIR + 'web')),
-    gulp.src('web/StochastikTest.mp4')
+    gulp.src('web/interactive/normal_anim.svg')
+      .pipe(gulp.dest(GENERIC_DIR + 'web/interactive')),
+    gulp.src('web/interactive/exp_anim.svg')
+      .pipe(gulp.dest(GENERIC_DIR + 'web/interactive')),
+    gulp.src('web/interactive/uniform_anim.svg')
+      .pipe(gulp.dest(GENERIC_DIR + 'web/interactive')),
+    gulp.src('web/interactive/')
+      .pipe(gulp.dest(GENERIC_DIR + 'web/interactive')),
+    gulp.src('web/appendix_web.pdf')
       .pipe(gulp.dest(GENERIC_DIR + 'web')),
   ]);
 }));
