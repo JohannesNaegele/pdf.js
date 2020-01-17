@@ -35,7 +35,7 @@ const defaultOptions = {
   },
   defaultUrl: {
     /** @type {string} */
-    value: 'appendix_web.pdf',
+    value: 'Stochastik1.pdf',
     kind: OptionKind.VIEWER,
   },
   defaultZoomValue: {

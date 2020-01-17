@@ -1830,9 +1830,7 @@ function webViewerUpdateViewarea(evt) {
   }
   let href =
     PDFViewerApplication.pdfLinkService.getAnchorUrl(location.pdfOpenParams);
-  // hier
-  //PDFViewerApplication.appConfig.toolbar.viewBookmark.href = href;
-  //console.log(PDFViewerApplication.appConfig.toolbar.viewBookmark.href);
+  PDFViewerApplication.appConfig.toolbar.viewBookmark.href = href;
   PDFViewerApplication.appConfig.secondaryToolbar.viewBookmarkButton.href =
     href;
 
