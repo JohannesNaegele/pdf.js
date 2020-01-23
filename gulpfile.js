@@ -707,6 +707,8 @@ gulp.task('generic', gulp.series('buildnumber', 'default_preferences', 'locale',
       .pipe(gulp.dest(GENERIC_DIR + 'web/interactive')),
     gulp.src('web/interactive/')
       .pipe(gulp.dest(GENERIC_DIR + 'web/interactive')),
+    gulp.src('web/interactive_groß/*.svg')
+      .pipe(gulp.dest(GENERIC_DIR + 'web/interactive_groß')),
     gulp.src('web/appendix_web.pdf')
       .pipe(gulp.dest(GENERIC_DIR + 'web')),
   ]);

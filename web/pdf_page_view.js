@@ -647,35 +647,83 @@ class PDFPageView {
         imageLayer.style.height = imageLayer.height.toString()  + "px";
         imageLayer.style.top = (imageLayer.height*(32/297)/(53/297)).toString() + "px";
         imageLayer.style.left = (imageLayer.width*(32/210)/(132/210)).toString() + "px";
-        imageLayer.data = "./interactive/normal_anim.svg";
+        imageLayer.data = "./interactive_groß/normal_anim.svg";
         imageLayer.id = "normal";
         imageLayer.classList.add('imageLayer');
         imageWrapper.appendChild(imageLayer);
       }
-      if (this.id == 4) {var imageLayer = document.createElement('object');
+      if (this.id == 4) {
+        var imageLayer = document.createElement('object');
         imageLayer.width = Math.floor(imageWrapper.style.width.replace(/px/,"")*(139/210));
         imageLayer.height = Math.floor(imageWrapper.style.height.replace(/px/,"")*(67/297));
         imageLayer.style.width = imageLayer.width.toString() + "px";
         imageLayer.style.height = imageLayer.height.toString()  + "px";
         imageLayer.style.top = (imageLayer.height*(32/297)/(67/297)).toString() + "px";
         imageLayer.style.left = (imageLayer.width*(32/210)/(139/210)).toString() + "px";
-        imageLayer.data = "./interactive/exp_anim.svg";
         imageLayer.id = "exp";
         imageLayer.classList.add('imageLayer');
+        imageLayer.data = "./interactive_groß/exp_anim.svg";
         imageWrapper.appendChild(imageLayer);
       }
 
-      if (this.id == 5) {var imageLayer = document.createElement('object');
+      if (this.id == 5) {
+        var imageLayer = document.createElement('object');
+        // slider
+        // <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        var slider = document.createElement('input');
+
+        imageLayer.onload = function() {
+          /*console.log("image");*/
+          /*slider.onload = function() {
+            console.log("tut");
+            var svg_js = imageLayer;
+            svg_js.anim["my_anim1"].frameNum = Math.round(slider.value - 1);
+            slider.oninput = function() {
+              /!*output.innerHTML = this.value;*!/
+              var desiredVal = Math.round(this.value - 1);
+              // in der Konsole für ein einzelnes svg wäre das nur anim["my_anim5"].frameNum
+              if (svg_js) {
+                svg_js.anim["my_anim1"].frameNum = desiredVal;
+              }
+            };
+          };*/
+          /*console.log("tut");*/
+          var svg_js = imageLayer.contentWindow;
+          svg_js.anim["my_anim1"].frameNum = Math.round(slider.value - 1);
+          slider.oninput = function() {
+            /!*output.innerHTML = this.value;*!/
+            var desiredVal = Math.round(this.value - 1);
+            // in der Konsole für ein einzelnes svg wäre das nur anim["my_anim5"].frameNum
+            if (svg_js) {
+              svg_js.anim["my_anim1"].frameNum = desiredVal;
+              svg_js.anim["my_anim2"].frameNum = desiredVal;
+            }
+          };
+        }
         imageLayer.width = Math.floor(imageWrapper.style.width.replace(/px/,"")*(141/210));
         imageLayer.height = Math.floor(imageWrapper.style.height.replace(/px/,"")*(52/297));
         imageLayer.style.width = imageLayer.width.toString() + "px";
         imageLayer.style.height = imageLayer.height.toString()  + "px";
         imageLayer.style.top = (imageLayer.height*(86/297)/(53/297)).toString() + "px";
         imageLayer.style.left = (imageLayer.width*(32/210)/(132/210)).toString() + "px";
-        imageLayer.data = "./interactive/uniform_anim.svg";
         imageLayer.id = "uniform";
         imageLayer.classList.add('imageLayer');
+
+        slider.min = "1";
+        slider.max = "100";
+        slider.value = "0";
+        slider.classList.add("slider");
+        slider.id = "uniform_slider";
+        slider.style.width = imageLayer.style.width;
+        //slider.style.height = imageLayer.style.height;
+        var top = (imageLayer.height*1 + imageLayer.height*(86/297)/(53/297));
+        slider.style.top = top + "px";
+        slider.style.left = imageLayer.style.left;
+
+        slider.type = "range";
+        imageLayer.data = "./interactive_groß/uniform_anim.svg";
         imageWrapper.appendChild(imageLayer);
+        imageWrapper.appendChild(slider);
       }
 
       this.imageWrapper = imageWrapper;
