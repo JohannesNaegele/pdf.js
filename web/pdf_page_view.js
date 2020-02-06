@@ -318,6 +318,7 @@ class PDFPageView {
     target.style.transform = cssTransform;
 
     if (this.imageWrapper) {
+      console.log("existiert");
       var imageWrapper = this.imageWrapper;
       imageWrapper.style.width = target.style.width;
       imageWrapper.style.height = target.style.height;
@@ -339,6 +340,57 @@ class PDFPageView {
         videoLayer.style.height = videoLayer.height.toString()  + "px";
         videoLayer.style.top = (0.5*videoLayer.height/0.256).toString() + "px";
         videoLayer.style.left = ((videoLayer.width/0.65-videoLayer.width)/2).toString() + "px";
+      }
+      if (this.id == 3) {
+        var imageLayer = imageWrapper.childNodes[0];
+        imageLayer.width = Math.floor(imageWrapper.style.width.replace(/px/,"")*(132/210));
+        imageLayer.height = Math.floor(imageWrapper.style.height.replace(/px/,"")*(53/297));
+        imageLayer.style.width = imageLayer.width.toString() + "px";
+        imageLayer.style.height = imageLayer.height.toString()  + "px";
+        imageLayer.style.top = (imageLayer.height*(32/297)/(53/297)).toString() + "px";
+        imageLayer.style.left = (imageLayer.width*(32/210)/(132/210)).toString() + "px";
+        imageLayer.data = "./interactive_gross/normal_anim.svg";
+        imageLayer.id = "normal";
+        imageLayer.classList.add('imageLayer');
+        imageWrapper.appendChild(imageLayer);
+      }
+      if (this.id == 4) {
+        var imageLayer = imageWrapper.childNodes[0];
+        imageLayer.width = Math.floor(imageWrapper.style.width.replace(/px/,"")*(139/210));
+        imageLayer.height = Math.floor(imageWrapper.style.height.replace(/px/,"")*(67/297));
+        imageLayer.style.width = imageLayer.width.toString() + "px";
+        imageLayer.style.height = imageLayer.height.toString()  + "px";
+        imageLayer.style.top = (imageLayer.height*(32/297)/(67/297)).toString() + "px";
+        imageLayer.style.left = (imageLayer.width*(32/210)/(139/210)).toString() + "px";
+        imageLayer.id = "exp";
+        imageLayer.classList.add('imageLayer');
+        imageLayer.data = "./interactive_gross/exp_anim.svg";
+        imageWrapper.appendChild(imageLayer);
+      }
+
+      if (this.id == 5) {
+        var imageLayer = imageWrapper.childNodes[0];
+        // slider
+        // <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        var slider = imageWrapper.childNodes[1];
+
+        imageLayer.width = Math.floor(imageWrapper.style.width.replace(/px/,"")*(141/210));
+        imageLayer.height = Math.floor(imageWrapper.style.height.replace(/px/,"")*(52/297));
+        imageLayer.style.width = imageLayer.width.toString() + "px";
+        imageLayer.style.height = imageLayer.height.toString()  + "px";
+        imageLayer.style.top = (imageLayer.height*(86/297)/(53/297)).toString() + "px";
+        imageLayer.style.left = (imageLayer.width*(32/210)/(132/210)).toString() + "px";
+        imageLayer.id = "uniform";
+        imageLayer.classList.add('imageLayer');
+
+        slider.style.width = imageLayer.style.width;
+        //slider.style.height = imageLayer.style.height;
+        var top = (imageLayer.height*1 + imageLayer.height*(86/297)/(53/297));
+        slider.style.top = top + "px";
+        slider.style.left = imageLayer.style.left;
+
+        imageWrapper.appendChild(imageLayer);
+        imageWrapper.appendChild(slider);
       }
     }
 
@@ -424,24 +476,6 @@ class PDFPageView {
     canvasWrapper.style.width = div.style.width;
     canvasWrapper.style.height = div.style.height;
     canvasWrapper.classList.add('canvasWrapper');
-
-    // ich
-    /*let imageWrapper = document.createElement('div');
-    //     imageWrapper.style.width = div.style.width;
-    //     imageWrapper.style.height = div.style.height;
-    //     imageWrapper.classList.add('canvasWrapper');
-    //     // ich
-    //     var imageLayer = document.createElement('img');
-    //     imageLayer.width = Math.floor(canvasWrapper.style.width/3);
-    //     imageLayer.height = Math.floor(canvasWrapper.style.height/3);
-    //     //imageLayer.src = "https://johannes.naegele.dev/uniform_dist.svg";
-    //     imageLayer.src = "https://www.saale-orla-kreis.de/sokdok/pic/14/fsp/Rot%20Quadrat.jpg";
-    //     imageLayer.alt = "Loading image...";
-    //     imageLayer.classList.add('imageLayer');
-    //     //canvasWrapper.appendChild(imageLayer);
-    //     imageWrapper.appendChild(imageLayer);
-    //     //
-    //     //*/
 
     if (this.annotationLayer && this.annotationLayer.div) {
       // The annotation layer needs to stay on top.
@@ -647,7 +681,7 @@ class PDFPageView {
         imageLayer.style.height = imageLayer.height.toString()  + "px";
         imageLayer.style.top = (imageLayer.height*(32/297)/(53/297)).toString() + "px";
         imageLayer.style.left = (imageLayer.width*(32/210)/(132/210)).toString() + "px";
-        imageLayer.data = "./interactive_groß/normal_anim.svg";
+        imageLayer.data = "./interactive_gross/normal_anim.svg";
         imageLayer.id = "normal";
         imageLayer.classList.add('imageLayer');
         imageWrapper.appendChild(imageLayer);
@@ -662,7 +696,7 @@ class PDFPageView {
         imageLayer.style.left = (imageLayer.width*(32/210)/(139/210)).toString() + "px";
         imageLayer.id = "exp";
         imageLayer.classList.add('imageLayer');
-        imageLayer.data = "./interactive_groß/exp_anim.svg";
+        imageLayer.data = "./interactive_gross/exp_anim.svg";
         imageWrapper.appendChild(imageLayer);
       }
 
@@ -721,7 +755,7 @@ class PDFPageView {
         slider.style.left = imageLayer.style.left;
 
         slider.type = "range";
-        imageLayer.data = "./interactive_groß/uniform_anim.svg";
+        imageLayer.data = "./interactive_gross/uniform_anim.svg";
         imageWrapper.appendChild(imageLayer);
         imageWrapper.appendChild(slider);
       }
@@ -737,7 +771,7 @@ class PDFPageView {
       /*this.div.appendChild(this.imageWrapper);*/
     }
     else {
-      imageWrapper.setAttribute("hidden", false);
+      //imageWrapper.setAttribute("hidden", false);
     }
     /*else {
       imageWrapper = this.imageWrapper
